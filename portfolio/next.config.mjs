@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  experimental: {
-    turbo: false, // disables Turbopack
+  output: "export", // static export enable
+  images: {
+    unoptimized: true, // disables Image Optimization for static export
   },
 };
-
 export default nextConfig;

@@ -3,21 +3,21 @@ const projectsData = [
   {
     title: "Weather App",
     description:
-      "A modern full-stack Weather Application built with React, Node.js, Express, MongoDB & Tailwind CSS with authentication and clean premium UI (glassmorphism + gradients + animations).",
+      "A full-stack Weather Application built with React, Node.js, Express, and MongoDB, featuring secure user authentication, responsive UI with modern design patterns (glassmorphism, gradients, and animations). Provides real-time weather updates, location-based forecasts, and smooth interactive experience optimized for performance and accessibility.",
     image: "/weather-app.jpg",
     link: "https://yourweatherapp.com",
   },
   {
     title: "Expense Tracker App",
     description:
-      "MERN-based full-stack finance tracker that manages income, expenses, budgets, and saving goals with visual analytics and a smart dashboard.",
+      "A MERN-stack Finance Tracker that enables users to manage income, expenses, budgets, and savings goals efficiently. Features include dynamic dashboards with visual analytics, interactive charts, automated calculations, and a responsive UI that enhances financial planning and decision-making.",
     image: "/expense-tracker.jpg",
     link: "https://yourexpensetracker.com",
   },
   {
     title: "Blog Space",
     description:
-      "Full-stack blogging platform built with React, Node.js, Express & MySQL. Features create, edit, delete blogs, favourites, category-based blogs and search functionality.",
+      "A full-stack Blogging Platform developed with React, Node.js, Express, and MySQL, allowing users to create, edit, delete, and favourite blogs. Includes category-based organization, advanced search functionality, and a seamless user experience that supports content management and community engagement.",
     image: "/blog-space.jpg",
     link: "https://yourblogspace.com",
   },
