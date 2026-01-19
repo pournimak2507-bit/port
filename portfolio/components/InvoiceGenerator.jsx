@@ -1,15 +1,17 @@
-// components/InvoiceGenerator.jsx
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable"; // ✅ Correct import
+import autoTable from "jspdf-autotable";
 
 const defaultTax = 18;
 
 const InvoiceGenerator = ({ onClose }) => {
+  const router = useRouter();
+
   const [items, setItems] = useState([]);
-  const [item, setItem] = useState({ name: "", qty: 1, price: "" });
+  const [item, setItem] = useState({ name: "", qty: "", price: "" });
   const [tax, setTax] = useState(defaultTax);
 
   const addItem = () => {
@@ -19,10 +21,10 @@ const InvoiceGenerator = ({ onClose }) => {
       ...prev,
       { name: item.name, qty: Number(item.qty), price: Number(item.price) },
     ]);
-    setItem({ name: "", qty: 1, price: "" });
+
+    setItem({ name: "", qty: "", price: "" });
   };
 
-  // Calculations
   const grandTotal = items.reduce((acc, it) => acc + it.qty * it.price, 0);
   const totalCGST = (grandTotal * (tax / 2)) / 100;
   const totalSGST = totalCGST;
@@ -53,7 +55,6 @@ const InvoiceGenerator = ({ onClose }) => {
       ];
     });
 
-    // ✅ Correct autoTable usage
     autoTable(doc, {
       startY: 48,
       head: [tableColumn],
@@ -71,15 +72,13 @@ const InvoiceGenerator = ({ onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-      <div className="w-full max-w-2xl p-6 rounded-lg transition-all bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-100">
-        {/* Header */}
+      <div className="w-full max-w-2xl p-6 rounded-lg bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-100">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-xl font-semibold">
             GST Calculator & Mini Invoice
           </h3>
         </div>
 
-        {/* Form */}
         <div className="grid gap-3">
           <input
             value={item.name}
@@ -87,24 +86,35 @@ const InvoiceGenerator = ({ onClose }) => {
             placeholder="Item Name"
             className="p-2 border rounded bg-white text-gray-900 dark:bg-gray-700 dark:text-gray-100"
           />
+
           <input
             value={item.qty}
-            onChange={(e) => setItem({ ...item, qty: Number(e.target.value) })}
+            onChange={(e) =>
+              setItem({
+                ...item,
+                qty: e.target.value === "" ? "" : Number(e.target.value),
+              })
+            }
             placeholder="Quantity"
             type="number"
             min={1}
             className="p-2 border rounded bg-white text-gray-900 dark:bg-gray-700 dark:text-gray-100"
           />
+
           <input
             value={item.price}
             onChange={(e) =>
-              setItem({ ...item, price: Number(e.target.value) })
+              setItem({
+                ...item,
+                price: e.target.value === "" ? "" : Number(e.target.value),
+              })
             }
             placeholder="Price"
             type="number"
             min={0}
             className="p-2 border rounded bg-white text-gray-900 dark:bg-gray-700 dark:text-gray-100"
           />
+
           <select
             value={tax}
             onChange={(e) => setTax(Number(e.target.value))}
@@ -115,6 +125,7 @@ const InvoiceGenerator = ({ onClose }) => {
             <option value={18}>18%</option>
             <option value={28}>28%</option>
           </select>
+
           <button
             onClick={addItem}
             className="bg-blue-500 text-white py-2 rounded w-36"
@@ -123,12 +134,11 @@ const InvoiceGenerator = ({ onClose }) => {
           </button>
         </div>
 
-        {/* Invoice Table */}
         <div className="mt-6 overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="text-left border-b">
-                <th>Item Name</th>
+                <th>Item</th>
                 <th>Qty</th>
                 <th>Price</th>
                 <th>CGST</th>
@@ -139,7 +149,7 @@ const InvoiceGenerator = ({ onClose }) => {
             <tbody>
               {items.length === 0 ? (
                 <tr>
-                  <td colSpan="6" className="py-4 text-center text-gray-500">
+                  <td colSpan="6" className="text-center py-4 text-gray-500">
                     No items added
                   </td>
                 </tr>
@@ -148,34 +158,24 @@ const InvoiceGenerator = ({ onClose }) => {
                   const total = it.qty * it.price;
                   const cgst = (total * (tax / 2)) / 100;
                   const sgst = cgst;
+
                   return (
                     <tr key={i} className="border-t">
-                      <td className="text-gray-900 dark:text-gray-100">
-                        {it.name}
-                      </td>
-                      <td className="text-gray-900 dark:text-gray-100">
-                        {it.qty}
-                      </td>
-                      <td className="text-gray-900 dark:text-gray-100">
-                        {it.price.toFixed(2)}
-                      </td>
-                      <td className="text-gray-900 dark:text-gray-100">
-                        {cgst.toFixed(2)}
-                      </td>
-                      <td className="text-gray-900 dark:text-gray-100">
-                        {sgst.toFixed(2)}
-                      </td>
-                      <td className="text-gray-900 dark:text-gray-100">
-                        {(total + cgst + sgst).toFixed(2)}
-                      </td>
+                      <td>{it.name}</td>
+                      <td>{it.qty}</td>
+                      <td>{it.price.toFixed(2)}</td>
+                      <td>{cgst.toFixed(2)}</td>
+                      <td>{sgst.toFixed(2)}</td>
+                      <td>{(total + cgst + sgst).toFixed(2)}</td>
                     </tr>
                   );
                 })
               )}
             </tbody>
+
             {items.length > 0 && (
               <tfoot>
-                <tr className="border-t font-semibold">
+                <tr className="font-semibold border-t">
                   <td colSpan="5" className="text-right pr-4">
                     Grand Total
                   </td>
@@ -204,7 +204,6 @@ const InvoiceGenerator = ({ onClose }) => {
           </table>
         </div>
 
-        {/* Buttons */}
         <div className="mt-4 flex gap-3">
           <button
             onClick={downloadPdf}
@@ -213,8 +212,12 @@ const InvoiceGenerator = ({ onClose }) => {
           >
             Download Invoice
           </button>
+
           <button
-            onClick={onClose}
+            onClick={() => {
+              onClose();
+              router.push("/");
+            }}
             className="bg-red-500 text-white px-4 py-2 rounded"
           >
             Close

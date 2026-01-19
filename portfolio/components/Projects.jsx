@@ -1,25 +1,26 @@
 /* eslint-disable @next/next/no-img-element */
+
 const projectsData = [
   {
     title: "Weather App",
     description:
-      "A full-stack Weather Application built with React, Node.js, Express, and MongoDB, featuring secure user authentication, responsive UI with modern design patterns (glassmorphism, gradients, and animations). Provides real-time weather updates, location-based forecasts, and smooth interactive experience optimized for performance and accessibility.",
+      "A full-stack Weather Application built with React, Node.js, Express, and MongoDB.",
     image: "/weather-app.jpg",
-    link: "https://yourweatherapp.com",
+    link: "https://github.com/pournimak2507-bit/weather",
   },
   {
     title: "Expense Tracker App",
     description:
-      "A MERN-stack Finance Tracker that enables users to manage income, expenses, budgets, and savings goals efficiently. Features include dynamic dashboards with visual analytics, interactive charts, automated calculations, and a responsive UI that enhances financial planning and decision-making.",
+      "A MERN-stack Finance Tracker with dashboards, charts, and budgeting tools.",
     image: "/expense-tracker.jpg",
-    link: "https://yourexpensetracker.com",
+    link: "https://github.com/pournimak2507-bit/expense-tracker-final",
   },
   {
     title: "Blog Space",
     description:
-      "A full-stack Blogging Platform developed with React, Node.js, Express, and MySQL, allowing users to create, edit, delete, and favourite blogs. Includes category-based organization, advanced search functionality, and a seamless user experience that supports content management and community engagement.",
+      "A full-stack blogging platform built with React, Node.js, Express, and MySQL.",
     image: "/blog-space.jpg",
-    link: "https://yourblogspace.com",
+    link: "https://github.com/pournimak2507-bit/blog-project",
   },
 ];
 
@@ -42,17 +43,17 @@ const Projects = () => {
                 alt={project.title}
                 className="w-full h-56 object-cover"
               />
+
               <div className="p-6">
                 <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
                 <p className="text-gray-600 mb-4">{project.description}</p>
-                <a
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-500 font-medium hover:underline"
+
+                <button
+                  onClick={() => (window.location.href = project.link)}
+                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
                 >
                   View Project
-                </a>
+                </button>
               </div>
             </div>
           ))}

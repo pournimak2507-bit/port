@@ -9,35 +9,29 @@ const skillsData = [
 
 const Skills = () => {
   return (
-    <section id="skills" className="w-full py-16 px-4 sm:px-6 bg-white">
-      <div className="max-w-5xl mx-auto">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-10 text-center">
-          My Skills
-        </h2>
+    <section id="skills" className="w-full py-16 px-6 bg-white">
+      <div className="max-w-6xl mx-auto text-center">
+        <h2 className="text-3xl font-bold mb-12">My Skills</h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
+        <div className="grid md:grid-cols-3 gap-8">
           {skillsData.map((skill, idx) => (
             <div
               key={idx}
-              className="p-5 sm:p-6 bg-gray-100 dark:bg-gray-800 rounded-xl shadow hover:shadow-lg transition-shadow duration-300"
+              className="bg-gray-100 rounded-xl shadow-md p-6 hover:shadow-lg transition"
             >
-              <h3 className="text-lg sm:text-xl font-semibold mb-2">
-                {skill.name}
-              </h3>
-              <p className="text-gray-600 dark:text-gray-300">{skill.level}</p>
-              <div className="h-2 bg-gray-300 dark:bg-gray-700 rounded-full mt-4 overflow-hidden">
-                <div
-                  className="h-full bg-blue-500 rounded-full transition-all duration-500"
-                  style={{
-                    width:
-                      skill.level === "Expert"
-                        ? "100%"
-                        : skill.level === "Advanced"
-                        ? "75%"
-                        : "50%",
-                  }}
-                ></div>
-              </div>
+              <h3 className="text-xl font-semibold mb-2">{skill.name}</h3>
+
+              <span
+                className={`px-3 py-1 text-sm font-medium rounded-full ${
+                  skill.level === "Expert"
+                    ? "bg-green-100 text-green-700"
+                    : skill.level === "Advanced"
+                    ? "bg-blue-100 text-blue-700"
+                    : "bg-yellow-100 text-yellow-700"
+                }`}
+              >
+                {skill.level}
+              </span>
             </div>
           ))}
         </div>
