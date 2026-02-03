@@ -10,9 +10,11 @@ export default function Navbar() {
     <nav className="w-full bg-white dark:bg-gray-900 shadow-md fixed top-0 left-0 z-50">
       <div className="max-w-6xl mx-auto px-5 py-4 flex justify-between items-center">
         {/* Logo */}
-        <h1 className="text-2xl font-bold text-blue-600 dark:text-blue-300 cursor-pointer">
-          Portfolio
-        </h1>
+        <Link href="/">
+          <h1 className="text-2xl font-bold text-blue-600 dark:text-blue-300 cursor-pointer">
+            Portfolio
+          </h1>
+        </Link>
 
         {/* Desktop Menu */}
         <ul className="hidden md:flex gap-6 font-medium text-gray-700 dark:text-gray-300">
@@ -28,9 +30,9 @@ export default function Navbar() {
           ))}
         </ul>
 
-        {/* Hamburger Button */}
+        {/* Hamburger */}
         <button
-          className="md:hidden text-gray-700 dark:text-gray-300 focus:outline-none text-2xl"
+          className="md:hidden text-gray-700 dark:text-gray-300 text-2xl"
           onClick={() => setOpen(!open)}
         >
           {open ? "✖" : "☰"}
@@ -39,7 +41,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       <div
-        className={`md:hidden bg-white dark:bg-gray-900 w-full overflow-hidden transition-max-height duration-300 ${
+        className={`md:hidden bg-white dark:bg-gray-900 overflow-hidden transition-all duration-300 ${
           open ? "max-h-60" : "max-h-0"
         }`}
       >
@@ -48,8 +50,8 @@ export default function Navbar() {
             <li key={idx}>
               <Link
                 href={path}
-                className="hover:text-blue-600 dark:hover:text-blue-300 duration-200 block"
-                onClick={() => setOpen(false)} // click -> close menu
+                onClick={() => setOpen(false)}
+                className="block hover:text-blue-600 dark:hover:text-blue-300"
               >
                 {["Home", "About", "Projects", "Contact"][idx]}
               </Link>
